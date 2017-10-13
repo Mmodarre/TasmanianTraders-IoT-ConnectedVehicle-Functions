@@ -1,1 +1,1 @@
-* Don't forget to do "npm install azure-iothub" on the function app console
+* Don't forget to do "npm install azure-iothub azure-iothub-device" on the function app console
