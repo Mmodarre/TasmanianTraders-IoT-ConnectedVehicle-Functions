@@ -12,8 +12,14 @@ module.exports = function (context, req) {
         var sasToken = sasToken.replace("deviceId", deviceId);
         var sasToken = sasToken.replace("deviceKey", deviceKey);
         var sasToken = sasToken.replace("iothubHost", iothubHost);
+
+        var deviceSdk = require('azure-iot-device');
+	    var deviceSas = require('azure-iot-device').SharedAccessSignature;
+        var anHourFromNow = require('azure-iot-common').anHourFromNow;
+        var sasTokenDevice = deviceSas.create(iothubHost, deviceKey, sasToken, anHourFromNow()).toString();
+
         context.res = {
-            sastoken: sasToken
+            sastoken: sasTokenDevice
         };
         context.done();
     });
