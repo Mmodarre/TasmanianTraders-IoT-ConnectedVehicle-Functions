@@ -8,13 +8,12 @@ module.exports = function (context, req) {
     // var sas = serviceSas.create(connStr.HostName, connStr.SharedAccessKeyName, connStr.SharedAccessKey, anHourFromNow()).toString();
     var serviceSdk = require('azure-iothub');
 	var serviceSas = require('azure-iothub').SharedAccessSignature;
-    var anHourFromNow = require('azure-iot-common').anHourFromNow;
-    var sasTokenDevice = serviceSas.create(iothubHost, keyName, keyValue, anHourFromNow()).toString();
-    var sasTokenDevice = sasTokenDevice.replace('/', '%2F'); // First slash
-    var sasTokenDevice = sasTokenDevice.replace('/', '%2F'); // Second slash
-
+    var expiresInMins = 60;
+    var expires = (Date.now() / 1000) + expiresInMins * 60;
+    var sasTokenDevice = serviceSas.create(iothubHost, keyName, keyValue, expires);
+    var sasTokenDeviceString = sasTokenDevice.toString();
     context.res = {
-      sastoken: sasTokenDevice
+      sastoken: sasTokenDeviceString
     };
     context.done();
 };
