@@ -12,6 +12,7 @@ module.exports = function (context, req) {
   var allowedIP = process.env.allowedip;
   if (allowedIP != ip_info) {
     context.log("IP Address not allowed!");
+    process.exit(403);
   }
 
   // "myhub.azure-devices.net/devices/device1";
